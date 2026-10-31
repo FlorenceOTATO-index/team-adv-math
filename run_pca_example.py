@@ -1,12 +1,12 @@
-"""Example / smoke test: run PCA and the raw-pixel baseline through evaluate().
-Person 2 can copy this pattern; Person 3 swaps in NMF; Person 4 swaps in CAEReducer."""
-from sklearn.decomposition import PCA
+"""Backward-compatible entry point for Person 2's experiment.
 
-import config
-from evaluate import IdentityReducer, evaluate, load_all_results
+Use ``python scripts/run_person2.py`` for the full documented workflow.  This
+file remains so the original repository command still runs the shared raw and
+PCA evaluations, and it now saves raw latents for Person 5's t-SNE work.
+"""
+
+from scripts.run_person2 import main
+
 
 if __name__ == "__main__":
-    evaluate(IdentityReducer(), "Raw", d=784, seed=0, save_latents=False)
-    for d in config.D_GRID:
-        evaluate(PCA(n_components=d, svd_solver="full"), "PCA", d=d, seed=0)
-    print(load_all_results())
+    raise SystemExit(main())
