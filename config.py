@@ -17,9 +17,12 @@ VAL_SIZE = 6000                 # taken from the official 60K train set -> 54K t
 D_GRID = [2, 4, 8, 16, 32, 64, 128]   # latent dimensions to sweep
 
 # ---- Evaluation ----
-KNN_K = 5                       # placeholder; Person 2 picks the final k on the validation set
+KNN_K = 9                       # selected by Person 2 on PCA(d=32) validation accuracy
 ENCODE_BATCH = 1000             # batch size for transform / inverse_transform
-SILHOUETTE_SAMPLE = None        # None = use all 10K test points; set e.g. 5000 if too slow
+# Silhouette is quadratic in the number of points.  A fixed 5K sample keeps
+# the shared evaluator practical; the test labels are still never used to
+# choose model settings.
+SILHOUETTE_SAMPLE = 5000
 
 # ---- Paths (relative, so they work in Colab and on Tzu-Yang's server) ----
 ROOT = os.path.dirname(os.path.abspath(__file__))
