@@ -1,0 +1,4 @@
+data/
+latents/
+__pycache__/
+*.pyc
