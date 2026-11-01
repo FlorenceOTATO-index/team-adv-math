@@ -4,3 +4,7 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .DS_Store
+
+# Person 4 (CAE): model checkpoints and run logs are large or machine-specific
+checkpoints/
+logs/
