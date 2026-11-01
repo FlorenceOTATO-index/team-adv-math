@@ -157,9 +157,10 @@ python scripts/merge_results.py                              # rebuild results/r
 
 ## Artifacts for Person 5
 
+* **Download.** Person 5's file is attached to the GitHub release `cae-d32-s0`: [CAE_d32_s0.npz](https://github.com/FlorenceOTATO-index/team-adv-math/releases/download/cae-d32-s0/CAE_d32_s0.npz).
 * **Every run.** Each run writes `latents/CAE_d{d}_s{seed}.npz` with `Z_train` of shape (54000, d) and `Z_test` of shape (10000, d), the same as PCA and NMF.
 * **`latents/CAE_d32_s0.npz`.** This file also contains `X_hat` of shape (10000, 784), float32, in [0, 1], in the official test order. `X_hat` is recomputed from the same trained model instance and the same saved `Z_test` that `evaluate()` scored, with its 1000-image batching and clipping. Inference is deterministic, so this equals the array behind the CSV's `mse`. Before the file is replaced atomically, the MSE between `X_hat` and the test images is checked against the CSV value, within the CSV's 1e-6 rounding. `evaluate()` only returns the rounded MSE, so this check confirms the same rounding bucket rather than bitwise identity.
-* **Not in the repo.** Latent files and checkpoints are git-ignored. Copy them from the GPU server with:
+* **Not in the repo.** Latent files and checkpoints are git-ignored. Apart from the release download above, copy them from the GPU server with:
 
 ```bash
 scp <user>@<gpu-server>:<repo-dir>/latents/CAE_d32_s0.npz .
@@ -231,7 +232,8 @@ Holm-adjusted) are in `docs/mathematical_analysis.md` §5.
 
 | Item | Value |
 |---|---|
-| Location | `latents/CAE_d32_s0.npz` in the repository clone on the GPU server (git-ignored; ask Person 4 for the server address and path) |
+| Download | [CAE_d32_s0.npz](https://github.com/FlorenceOTATO-index/team-adv-math/releases/download/cae-d32-s0/CAE_d32_s0.npz) (GitHub release `cae-d32-s0`) |
+| Server copy | `latents/CAE_d32_s0.npz` in the repository clone on the GPU server (git-ignored) |
 | `Z_train` | (54000, 32) float32 |
 | `Z_test` | (10000, 32) float32 |
 | `X_hat` | (10000, 784) float32, values 0.0000 to 0.9978, official test order |
@@ -244,10 +246,10 @@ and 0.166 when shifted by one image. `tests/test_person4.py::test_person5_artifa
 re-verifies the file whenever it is present. `X_hat` rows reshape to 28×28 images
 with `X_hat[i].reshape(28, 28)`.
 
-To transfer and verify the file:
+To download and check the file:
 
 ```bash
-scp <user>@<gpu-server>:<repo-dir>/latents/CAE_d32_s0.npz .
+curl -L -o CAE_d32_s0.npz https://github.com/FlorenceOTATO-index/team-adv-math/releases/download/cae-d32-s0/CAE_d32_s0.npz
 sha256sum CAE_d32_s0.npz          # macOS: shasum -a 256 CAE_d32_s0.npz
 # expected: ca4a5c761b6017e053e3f04c983fa3e282413da30ef0bfe67412470b4223ec99
 python -c "import numpy as np; f = np.load('CAE_d32_s0.npz'); print({k: f[k].shape for k in f.files})"
