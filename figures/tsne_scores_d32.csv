@@ -2,3 +2,4 @@ method,d,silhouette_latent,trustworthiness
 Raw,784,0.0449,0.9891
 PCA,32,0.0676,0.9952
 NMF,32,0.0232,0.9943
+CAE,32,0.0715,0.9921

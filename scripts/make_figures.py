@@ -3,8 +3,9 @@
 Usage (from the repo root):
     python scripts/make_figures.py
 
-Merges every results/results_<method>.csv (the files evaluate() writes),
-so new NMF / CAE files appear automatically. results.csv is ignored.
+Merges every results/results_<method>.csv (the files evaluate() writes).
+Methods that only exist in results/results.csv (e.g. CAE merged there) are
+picked up from it too; nothing is double-counted.
 - Multiple seeds per (method, d) are averaged, with a ±1 std band.
 - The "Raw" row (d = 784) is drawn as a dashed reference line, not a curve.
 Writes PNGs into figures/.
@@ -32,10 +33,23 @@ METRICS = {
 
 def load():
     files = sorted(RESULTS_DIR.glob("results_*.csv"))
-    if not files:
-        raise SystemExit(f"No results_*.csv files in {RESULTS_DIR}")
-    print("Reading:", ", ".join(f.name for f in files))
-    df = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
+    frames = [pd.read_csv(f) for f in files]
+    names = [f.name for f in files]
+    have = set(pd.concat(frames)["method"].str.upper()) if frames else set()
+    # results.csv is a merged copy. Only take methods from it that have no
+    # results_<method>.csv of their own (e.g. CAE merged straight into results.csv).
+    merged = RESULTS_DIR / "results.csv"
+    if merged.exists():
+        m = pd.read_csv(merged)
+        extra = m[~m["method"].str.upper().isin(have)]
+        if not extra.empty:
+            frames.append(extra)
+            names.append(f"results.csv (only {sorted(extra['method'].unique())})")
+    if not frames:
+        raise SystemExit(f"No results files in {RESULTS_DIR}")
+    print("Reading:", ", ".join(names))
+    df = pd.concat(frames, ignore_index=True)
+    df = df.drop_duplicates(subset=["method", "d", "seed"], keep="first")
     df["method"] = df["method"].replace({"RAW": "Raw", "raw": "Raw"})
     ref = df[df["method"] == REF_METHOD]
     runs = df[df["method"] != REF_METHOD]
