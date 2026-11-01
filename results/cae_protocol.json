@@ -1,0 +1,72 @@
+{
+ "fingerprint": "271764b028689114",
+ "frozen_at": "2026-11-01T15:46:21+08:00",
+ "git_commit": "538ef1cb63105bad7fb78646ee7a00332439a612",
+ "pilot_evidence": [
+  "CAE_d128_s0_p271764b0.json",
+  "CAE_d2_s0_p271764b0.json",
+  "CAE_d32_s0_p271764b0.json"
+ ],
+ "protocol": {
+  "architecture": [
+   "encoder.0: Conv2d(1->16, kernel=(3, 3), stride=(2, 2), padding=(1, 1), bias=True)",
+   "encoder.1: ReLU",
+   "encoder.2: Conv2d(16->32, kernel=(3, 3), stride=(2, 2), padding=(1, 1), bias=True)",
+   "encoder.3: ReLU",
+   "encoder.4: Flatten",
+   "encoder.5: Linear(1568->d, bias=True)",
+   "decoder.0: Linear(d->1568, bias=True)",
+   "decoder.1: Unflatten(32, 7, 7)",
+   "decoder.2: ConvTranspose2d(32->16, kernel=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1), bias=True)",
+   "decoder.3: ReLU",
+   "decoder.4: ConvTranspose2d(16->1, kernel=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1), bias=True)",
+   "decoder.5: Sigmoid"
+  ],
+  "code_sha256": {
+   "data.py": "900ed3d36b6acb19626e4f6f47864a838b0a5528985c2deaa4483433653631d2",
+   "evaluate.py": "e11741ec7713168cdc9120674f0997c2733f64c48fcc744f7e4cfc8062eba38f",
+   "models/cae.py": "f8622d35260b3c59d420197cd5d9cb2f3dd179865a42c20cbbcad2f6de9bb4bc"
+  },
+  "data": {
+   "SPLIT_SEED": 42,
+   "VAL_SIZE": 6000,
+   "split_sha256": "f03692a1560b1083c26a20ba7c6daefa59ea22dc2e3f9d96f0f7d1b0c08035e4"
+  },
+  "evaluation": {
+   "ENCODE_BATCH": 1000,
+   "KNN_K": 9,
+   "SILHOUETTE_SAMPLE": 5000,
+   "columns": [
+    "method",
+    "d",
+    "seed",
+    "knn_k",
+    "knn_acc",
+    "silhouette",
+    "mse",
+    "fit_time_s",
+    "encode_time_ms_per_img",
+    "n_params"
+   ]
+  },
+  "fixed": {
+   "init": "PyTorch default layer init, built on CPU after set_seed()",
+   "loss": "pixelwise MSE, mean over batch and 784 pixels",
+   "lr_schedule": "constant",
+   "numerics": "float32; TF32 disabled; cuDNN deterministic, benchmark off",
+   "optimizer": "torch.optim.Adam(betas=(0.9, 0.999), eps=1e-8, weight_decay=0)",
+   "selection": "restore epoch with the lowest validation MSE",
+   "shuffle": "torch.randperm on the CPU generator, once per epoch, last partial batch kept",
+   "validation": "shared 6K split from data.load_data() unless X_val is passed explicitly"
+  },
+  "method": "CAE",
+  "n_params_formula": "11137 + 3137*d",
+  "training": {
+   "batch_size": 256,
+   "lr": 0.001,
+   "max_epochs": 400,
+   "min_delta": 0.0,
+   "patience": 10
+  }
+ }
+}
