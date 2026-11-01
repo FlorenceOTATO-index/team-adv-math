@@ -1,0 +1,8 @@
+d,seed,init,max_iter,n_iter,converged,total_minutes
+128,0,nndsvda,1000,1000,False,6.9
+64,0,nndsvda,1000,1000,False,1.89
+32,0,nndsvda,1000,351,True,0.31
+16,0,nndsvda,1000,405,True,0.18
+8,0,nndsvda,1000,215,True,0.08
+4,0,nndsvda,1000,137,True,0.06
+2,0,nndsvda,1000,50,True,0.03
