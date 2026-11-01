@@ -1,4 +1,4 @@
-# Person 4: Convolutional autoencoder (CAE)
+# Convolutional autoencoder (CAE)
 
 This page describes the CAE implementation, its frozen training protocol, how to
 rerun it, and which files Person 5 needs. Results are summarised at the end. The
