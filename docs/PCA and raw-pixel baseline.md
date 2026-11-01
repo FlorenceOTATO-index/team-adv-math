@@ -1,4 +1,4 @@
-# Person 2: PCA and raw-pixel baseline
+# PCA and raw-pixel baseline
 
 ## Scope
 

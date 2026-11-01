@@ -19,7 +19,7 @@ size, silhouette score, and t-SNE visualizations.
 | `scripts/run_person2.py` | Runs the raw-pixel baseline and Person 2's PCA sweep. |
 | `scripts/plot_pca_variance.py` | Creates the cumulative explained-variance table and figure. |
 | `scripts/merge_results.py` | Merges per-method CSVs into `results/results.csv` for Person 5. |
-| `docs/person2.md` | Person 2's exact run order, outputs, and reproducibility rules. |
+| `docs/PCA and raw-pixel baseline.md` | Person 2's exact run order, outputs, and reproducibility rules. |
 | `tests/` | Lightweight tests for shared interfaces and Person 2's k-selection code. |
 
 ## Setup
