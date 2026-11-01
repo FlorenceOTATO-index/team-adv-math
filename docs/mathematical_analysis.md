@@ -114,7 +114,7 @@ $$f = L_e \circ \text{flatten} \circ \text{ReLU} \circ C_2 \circ \text{ReLU} \ci
 g = \text{sigmoid} \circ T_2 \circ \text{ReLU} \circ T_1 \circ \text{reshape} \circ L_d .$$
 
 $L_e$ and $L_d$ are the affine bottleneck layers ($1568 \to d$ and $d \to 1568$).
-The full shape table is in `docs/person4.md`.
+The full shape table is in `docs/CAE.md`.
 
 **Bottleneck.** **[Derived]** All reconstructions lie in $g_\phi(\mathbb R^d)$, the image
 of a $d$-dimensional space under a continuous, piecewise-smooth map. It is a
